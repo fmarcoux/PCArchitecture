@@ -65,13 +65,14 @@ package MIPS32_package is
     
     constant OP_SW    : std_ulogic_vector( 5 downto 0 ) := "101011";
     --constant OP_immarith:   std_ulogic_vector( 5 downto 0 ) := "001---";
-	-- nouvelles constantes SMID a partir de 110000 pour certaines op avec 4 vecteursw
+	
+	-- nouvelles constantes SMID a partir de 110000 pour certaines op avec 4 vecteurs
 	constant OP_LWV  : std_ulogic_vector( 5 downto 0 ) := "110000";
 	constant OP_SWV  : std_ulogic_vector( 5 downto 0 ) := "110001";
-	constant OP_ADDV : std_ulogic_vector( 5 downto 0 ) := "110010";
+	constant OP_ADDV : std_ulogic_vector( 5 downto 0 ) := "110010"; -- A voir si on met les R type dans ALUF
 	constant OP_MOVNV: std_ulogic_vector( 5 downto 0 ) := "110011";
 	constant OP_ADDVS: std_ulogic_vector( 5 downto 0 ) := "110100"; 
-	constant OP_SLTV : std_ulogic_vector( 5 downto 0 ) := "110101"; 
+	constant OP_SLTV : std_ulogic_vector( 5 downto 0 ) := "110101"; -- A voir si on met les R type dans ALUF 
 	constant OP_MOVZV: std_ulogic_vector( 5 downto 0 ) := "110110"; 
 	
 	constant c_Mips32_Nop	 	: std_ulogic_vector(31 downto 0) := X"00000000";

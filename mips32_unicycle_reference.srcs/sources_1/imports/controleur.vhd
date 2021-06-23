@@ -80,8 +80,11 @@ begin
                 o_AluFunct <= ALU_ADD;
             when OP_MOVZV =>
                 o_AluFunct <= ALU_AND;
+			--? R type 
 			when OP_ADDVS =>
 			    o_AluFunct <= ALU_ADD; 
+			when OP_ADDV =>
+			    o_AluFunct <= ALU_ADD;
 			    
             -- when OP_??? =>   -- autres cas?
 			-- sinon
@@ -126,10 +129,16 @@ begin
 								i_Op = OP_ORI or 
 								i_Op = OP_LUI or 
 								i_Op = OP_LW or 
-								i_Op = OP_JAL
+								i_Op = OP_JAL or 
+								i_Op = OP_LWV or --Nouveau pour SMID
+								i_op = OP_ADDVS or 
+								i_Op = OP_MOVNV or 
+								i_Op = OP_MOVZV or 
+								i_Op = OP_ADDV or 
+								i_Op = OP_SLTV
 						else '0';
 	
-	o_RegDst 		<= '1' when i_Op = OP_Rtype else '0';
+	o_RegDst 		<= '1' when i_Op = OP_Rtype or i_Op = OP_ADDV or i_Op = OP_SLTV else '0'; -- R type de SIMD sont ajoute ici
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
 								i_Op = OP_BEQ
@@ -152,5 +161,15 @@ begin
 	o_jump_register <= '1' when i_Op = OP_Rtype and 
 								i_funct_field = ALUF_JR 
 						else '0';
+						
+    --SIMD enable
+    o_SimdEnable <= '1' when i_Op = OP_LWV or 
+                             i_Op = OP_SWV or 
+                             i_Op = OP_ADDVS or  
+                             i_Op = OP_MOVNV or 
+                             i_Op = OP_MOVZV or
+                             i_Op = OP_ADDV or 
+                             i_OP = OP_SLTV
+                             else '0';
 
 end Behavioral;

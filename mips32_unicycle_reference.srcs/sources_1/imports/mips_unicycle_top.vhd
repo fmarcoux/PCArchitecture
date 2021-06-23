@@ -48,7 +48,12 @@ Port (
     o_Jump : out std_ulogic;
 	o_jump_register : out std_ulogic;
 	o_jump_link : out std_ulogic;
-	o_SignExtend : out std_ulogic
+	o_SignExtend : out std_ulogic;
+	
+	--Added for SIMD
+	o_SimdEnable : out std_ulogic
+	
+	
     );
 end component;
 
@@ -71,6 +76,8 @@ Port (
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
 	
+	i_SimdEnable    : in std_ulogic;
+	
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 );
@@ -89,11 +96,14 @@ end component;
     signal s_jump           : std_ulogic;
 	signal s_SignExtend     : std_ulogic;
 
-	
     signal s_Instruction    : std_ulogic_vector(31 downto 0);
+    
+    signal s_SimdEnable     : std_ulogic;
     -- champs du registre d'instructions
     alias s_instr_funct     : std_ulogic_vector(5 downto 0) is s_Instruction(5 downto 0);
     alias s_opcode          : std_ulogic_vector(5 downto 0) is s_Instruction(31 downto 26);
+    
+    
 
 begin
 
@@ -112,10 +122,13 @@ Port map(
     o_ALUSrc    	=> s_ALUSrc,
     o_RegWrite  	=> s_RegWrite,
 	
+	
     o_Jump 			=> s_Jump,
 	o_jump_register => s_jump_register,
 	o_jump_link		=> s_jump_link,
-	o_SignExtend 	=> s_SignExtend
+	o_SignExtend 	=> s_SignExtend,
+	
+	o_SimdEnable    => s_simdEnable --Enable la fonction vectorielle des operations
     );
 	
 	
@@ -137,6 +150,9 @@ Port map(
 	i_jump_register => s_jump_register,
 	i_jump_link   	=> s_jump_link,
 	i_SignExtend 	=> s_SignExtend,
+	
+	i_SimdEnable    => s_SimdEnable, --Enable la fonction vectorielle des operations
+	
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC
 );	

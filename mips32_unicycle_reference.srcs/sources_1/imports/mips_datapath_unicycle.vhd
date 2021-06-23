@@ -37,6 +37,8 @@ Port (
 	i_jump_register : in std_ulogic;
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
+	
+	i_simdEnable    : in std_ulogic;
 
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
@@ -51,17 +53,35 @@ component MemInstructions is
            o_instruction : out std_ulogic_vector (31 downto 0));
 end component;
 
-component MemDonnees is
-Port ( 
-	clk : in std_ulogic;
-	reset : in std_ulogic;
-	i_MemRead 	: in std_ulogic;
-	i_MemWrite : in std_ulogic;
-    i_Addresse : in std_ulogic_vector (31 downto 0);
-	i_WriteData : in std_ulogic_vector (31 downto 0);
-    o_ReadData : out std_ulogic_vector (31 downto 0)
-);
-end component;
+--component MemDonnees is
+--Port ( 
+--	clk : in std_ulogic;
+--	reset : in std_ulogic;
+--	i_MemRead 	: in std_ulogic;
+--	i_MemWrite : in std_ulogic;
+--    i_Addresse : in std_ulogic_vector (31 downto 0);
+--	i_WriteData : in std_ulogic_vector (31 downto 0);
+--    o_ReadData : out std_ulogic_vector (31 downto 0)
+--);
+--end component;
+
+    component MemDonneesWideDual is
+    Port ( 
+        clk 		: in std_ulogic;
+        reset 		: in std_ulogic;
+        i_MemRead	: in std_ulogic;
+        i_MemWrite 	: in std_ulogic;
+        i_Addresse 	: in std_ulogic_vector (31 downto 0);
+        i_WriteData : in std_ulogic_vector (31 downto 0);
+        o_ReadData 	: out std_ulogic_vector (31 downto 0);
+        
+        -- ports pour accès à large bus, adresse partagée
+        i_MemReadWide       : in std_ulogic;
+        i_MemWriteWide 		: in std_ulogic;
+        i_WriteDataWide 	: in std_ulogic_vector (127 downto 0);
+        o_ReadDataWide 		: out std_ulogic_vector (127 downto 0)
+          );
+    end component;
 
 	component BancRegistres is
 	Port ( 
@@ -121,6 +141,11 @@ end component;
     signal s_Reg_Wr_Data           : std_ulogic_vector(31 downto 0);
     signal s_MemoryReadData        : std_ulogic_vector(31 downto 0);
     signal s_AluB_data             : std_ulogic_vector(31 downto 0);
+    
+    signal s_ReadDataVector        : std_ulogic_vector(127 downto 0);
+    signal s_reg_wide_1            : std_ulogic_vector(127 downto 0);
+    signal s_reg_wide_2            : std_ulogic_vector(127 downto 0);
+    
 	
 
 begin
@@ -224,15 +249,23 @@ port map(
 ------------------------------------------------------------------------
 -- MÃ©moire de donnÃ©es
 ------------------------------------------------------------------------
-inst_MemDonnees : MemDonnees
+inst_MemDonnees : MemDonneesWideDual
 Port map( 
 	clk 		=> clk,
 	reset 		=> reset,
 	i_MemRead	=> i_MemRead,
 	i_MemWrite	=> i_MemWrite,
     i_Addresse	=> s_AluResult,
-	i_WriteData => s_reg_data2,
-    o_ReadData	=> s_MemoryReadData
+	i_WriteData => s_reg_wide_1,
+    o_ReadData	=> s_MemoryReadData,
+    
+    -- ports pour accès à large bus, adresse partagée
+    i_MemReadWide     => i_MemRead,  
+    i_MemWriteWide 	  => i_MemWrite,	
+    i_WriteDataWide   => s_reg_data2,	
+    o_ReadDataWide 	  => s_ReadDataVector	
+    
+    
 	);
 	
 
