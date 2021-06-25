@@ -84,17 +84,30 @@ end component;
     end component;
 
 	component BancRegistres is
-	Port ( 
-		clk : in std_ulogic;
-		reset : in std_ulogic;
-		i_RS1 : in std_ulogic_vector (4 downto 0);
-		i_RS2 : in std_ulogic_vector (4 downto 0);
-		i_Wr_DAT : in std_ulogic_vector (31 downto 0);
-		i_WDest : in std_ulogic_vector (4 downto 0);
-		i_WE : in std_ulogic;
-		o_RS1_DAT : out std_ulogic_vector (31 downto 0);
-		o_RS2_DAT : out std_ulogic_vector (31 downto 0)
-		);
+	Port ( clk              : in  std_ulogic;
+           reset            : in  std_ulogic;
+           i_RS1            : in  std_ulogic_vector (4 downto 0);
+           i_RS2            : in  std_ulogic_vector (4 downto 0);
+           
+           i_Wr_DAT1         : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT2         : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT3         : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT4         : in  std_ulogic_vector (31 downto 0);
+           
+           i_WDest          : in  std_ulogic_vector (4 downto 0);
+           i_WE 	        : in  std_ulogic;           
+           
+           i_SIMD_enable    : in std_ulogic;
+           
+           o_RS1_DAT1        : out std_ulogic_vector (31 downto 0);
+           o_RS1_DAT2        : out std_ulogic_vector (31 downto 0);
+           o_RS1_DAT3        : out std_ulogic_vector (31 downto 0);
+           o_RS1_DAT4        : out std_ulogic_vector (31 downto 0);
+           
+           o_RS2_DAT1        : out std_ulogic_vector (31 downto 0);
+           o_RS2_DAT2        : out std_ulogic_vector (31 downto 0);
+           o_RS2_DAT3        : out std_ulogic_vector (31 downto 0);
+           o_RS2_DAT4        : out std_ulogic_vector (31 downto 0));
 	end component;
 
 	component alu is
@@ -146,8 +159,21 @@ end component;
     signal s_reg_wide_1            : std_ulogic_vector(127 downto 0);
     signal s_reg_wide_2            : std_ulogic_vector(127 downto 0);
     
-	
-
+    -- signaux SIMD
+    
+    signal s_alutoreg2             : std_ulogic_vector(31 downto 0);
+    signal s_alutoreg3             : std_ulogic_vector(31 downto 0);
+    signal s_alutoreg4             : std_ulogic_vector(31 downto 0);
+    
+	signal s_reg1toalu2             : std_ulogic_vector(31 downto 0);
+    signal s_reg1toalu3             : std_ulogic_vector(31 downto 0);
+    signal s_reg1toalu4             : std_ulogic_vector(31 downto 0);
+    signal s_reg2toalu2             : std_ulogic_vector(31 downto 0);
+    signal s_reg2toalu3             : std_ulogic_vector(31 downto 0);
+    signal s_reg2toalu4             : std_ulogic_vector(31 downto 0);
+    
+    signal s_alutomem               : std_ulogic_vector(127 downto 0);
+    
 begin
 
 o_PC	<= r_PC; -- permet au synthÃ©tiseur de sortir de la logique. Sinon, il enlÃ¨ve tout...
@@ -163,6 +189,10 @@ s_shamt         <= s_Instruction(10 downto  6);
 s_instr_funct   <= s_Instruction( 5 downto  0);
 s_imm16         <= s_Instruction(15 downto  0);
 s_jump_field	<= s_Instruction(25 downto  0);
+s_alutomem(127 downto 96) <= s_Aluresult;
+s_alutomem(95 downto 64) <= s_Alutoreg2;
+s_alutomem(63 downto 32) <= s_Alutoreg3;
+s_alutomem(31 downto 0) <= s_Alutoreg4;
 ------------------------------------------------------------------------
 
 
@@ -218,11 +248,21 @@ port map (
 	reset        => reset,
 	i_RS1        => s_rs,
 	i_RS2        => s_rt,
-	i_Wr_DAT     => s_Data2Reg_muxout,
+	i_SIMD_enable=> i_SIMDenable,
+	i_Wr_DAT1    => s_Data2Reg_muxout,
+	i_Wr_DAT2    => s_alutoreg2,
+	i_Wr_DAT3    => s_alutoreg3,
+	i_Wr_DAT4    => s_alutoreg4,
 	i_WDest      => s_WriteRegDest_muxout,
 	i_WE         => i_RegWrite,
-	o_RS1_DAT    => s_reg_data1,
-	o_RS2_DAT    => s_reg_data2
+	o_RS1_DAT1   => s_reg_data1,
+	o_RS1_DAT2   => s_reg1toalu2,
+	o_RS1_DAT3   => s_reg1toalu3,
+	o_RS1_DAT4   => s_reg1toalu4,
+	o_RS2_DAT1   => s_reg_data2,
+	o_RS2_DAT2   => s_reg2toalu2,
+	o_RS2_DAT3   => s_reg2toalu3,
+	o_RS2_DAT4   => s_reg2toalu4
 	);
 	
 
@@ -246,9 +286,40 @@ port map(
 	o_zero      => s_zero
 	);
 
+inst_Alu2: alu 
+port map( 
+	i_a         => s_reg1toalu2,
+	i_b         => s_reg2toalu2,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_Alutoreg2,
+	o_zero      => s_zero
+	);
+	
+inst_Alu3: alu 
+port map( 
+	i_a         => s_reg1toalu3,
+	i_b         => s_reg2toalu3,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_Alutoreg3,
+	o_zero      => s_zero
+	);
+	
+inst_Alu4: alu 
+port map( 
+	i_a         => s_reg1toalu4,
+	i_b         => s_reg2toalu4,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_Alutoreg4,
+	o_zero      => s_zero
+	);
 ------------------------------------------------------------------------
 -- MÃ©moire de donnÃ©es
 ------------------------------------------------------------------------
+-- signal pour combiner les sorties des alu
+
 inst_MemDonnees : MemDonneesWideDual
 Port map( 
 	clk 		=> clk,
@@ -262,7 +333,7 @@ Port map(
     -- ports pour accès à large bus, adresse partagée
     i_MemReadWide     => i_MemRead,  
     i_MemWriteWide 	  => i_MemWrite,	
-    i_WriteDataWide   => s_reg_data2,	
+    i_WriteDataWide   => s_alutomem,	
     o_ReadDataWide 	  => s_ReadDataVector	
     
     

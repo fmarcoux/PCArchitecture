@@ -130,7 +130,7 @@ begin
 								i_Op = OP_LUI or 
 								i_Op = OP_LW or 
 								i_Op = OP_JAL or 
-								i_Op = OP_LWV or --Nouveau pour SMID
+								i_Op = OP_LWV or --Nouveau pour SIMD
 								i_op = OP_ADDVS or 
 								i_Op = OP_MOVNV or 
 								i_Op = OP_MOVZV or 
