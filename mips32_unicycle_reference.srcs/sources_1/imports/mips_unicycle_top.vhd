@@ -9,9 +9,9 @@
 --	Auteur: 		Marc-André Tétrault
 --					Daniel Dalle
 --					Sébastien Roy
--- 
+--  
 ---------------------------------------------------------------------------------------------
-
+ 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -27,7 +27,7 @@ Port (
 	o_zero 			: out std_ulogic
 	);
 end mips_unicycle_top;
-
+ 
 architecture Behavioral of mips_unicycle_top is
 
 component controleur is
@@ -51,8 +51,8 @@ Port (
 	o_SignExtend : out std_ulogic;
 	
 	--Added for SIMD
-	o_SimdEnable : out std_ulogic
-	
+	o_SimdEnable   : out std_ulogic;
+	o_MemWriteWide : out std_ulogic
 	
     );
 end component;
@@ -78,6 +78,8 @@ Port (
 	
 	i_SimdEnable    : in std_ulogic;
 	
+	i_MemWriteWide  : in std_ulogic;
+	
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 );
@@ -95,6 +97,8 @@ end component;
 	signal s_jump_link      : std_ulogic;
     signal s_jump           : std_ulogic;
 	signal s_SignExtend     : std_ulogic;
+
+    signal s_MemWriteWide   : std_ulogic;
 
     signal s_Instruction    : std_ulogic_vector(31 downto 0);
     
@@ -122,13 +126,13 @@ Port map(
     o_ALUSrc    	=> s_ALUSrc,
     o_RegWrite  	=> s_RegWrite,
 	
-	
     o_Jump 			=> s_Jump,
 	o_jump_register => s_jump_register,
 	o_jump_link		=> s_jump_link,
 	o_SignExtend 	=> s_SignExtend,
 	
-	o_SimdEnable    => s_simdEnable --Enable la fonction vectorielle des operations
+	o_SimdEnable    => s_simdEnable, --Enable la fonction vectorielle des operations
+	o_MemWriteWide  => s_MemWriteWide  -- Enable du write dans les reg ou dans la memoire seulement lors des operation SIMD
     );
 	
 	
@@ -153,6 +157,8 @@ Port map(
 	
 	i_SimdEnable    => s_SimdEnable, --Enable la fonction vectorielle des operations
 	
+	i_MemWriteWide  => s_MemWriteWide,
+		
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC
 );	

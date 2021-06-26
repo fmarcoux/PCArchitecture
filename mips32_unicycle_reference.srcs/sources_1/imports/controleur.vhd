@@ -37,8 +37,8 @@ Port (
 	o_jump_link 	: out std_ulogic;
 	o_SignExtend 	: out std_ulogic;
 	--ADD for SIMD instruction
-	o_SimdEnable : out std_ulogic
-	
+	o_SimdEnable : out std_ulogic;
+	o_MemWriteWide : out std_ulogic
 	
     );
 end controleur;
@@ -135,8 +135,9 @@ begin
 								i_Op = OP_MOVNV or 
 								i_Op = OP_MOVZV or 
 								i_Op = OP_ADDV or 
-								i_Op = OP_SLTV
+								i_Op = OP_SLTV	
 						else '0';
+	
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or i_Op = OP_ADDV or i_Op = OP_SLTV else '0'; -- R type de SIMD sont ajoute ici
 	
@@ -145,8 +146,14 @@ begin
 						else '1';
 	o_Branch 		<= '1' when i_Op = OP_BEQ   else '0';
 	o_MemRead 		<= '1' when i_Op = OP_LW or i_Op = OP_LWV else '0'; 
-	o_MemWrite 		<= '1' when i_Op = OP_SW  or i_Op = OP_SWV else '0';
+	
+	o_MemWrite 		<= '1' when i_Op = OP_SW  else '0';
+	
+	o_MemWriteWide 	<= '1' when i_Op = OP_SWV else '0'; -- nouveau pour SIMD
+	
 	o_MemtoReg 		<= '1' when i_Op = OP_LW or i_Op = OP_LWV else '0';
+	
+	
 	o_SignExtend	<= '1' when i_OP = OP_ADDI or
 	                           i_OP = OP_BEQ or i_OP = OP_ADDVS
 	                     else '0';
@@ -171,5 +178,6 @@ begin
                              i_Op = OP_ADDV or 
                              i_OP = OP_SLTV
                              else '0';
+     
 
 end Behavioral;

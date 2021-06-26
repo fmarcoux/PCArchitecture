@@ -33,6 +33,8 @@ Port (
 	i_MemRead 		: in std_ulogic;
 	i_MemWrite	  	: in std_ulogic;
 
+    i_MemWriteWide  : in std_ulogic;
+
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
 	i_jump_link   	: in std_ulogic;
@@ -160,6 +162,9 @@ end component;
     signal s_reg_wide_2            : std_ulogic_vector(127 downto 0);
     
     -- signaux SIMD
+    signal s_Data2Reg2_muxout       : std_ulogic_vector(31 downto 0); -- MUX pour write le res de l'alu ou la memoire dans les vect WR_DATA
+    signal s_Data2Reg3_muxout       : std_ulogic_vector(31 downto 0);
+    signal s_Data2Reg4_muxout       : std_ulogic_vector(31 downto 0);
     
     signal s_alutoreg2             : std_ulogic_vector(31 downto 0);
     signal s_alutoreg3             : std_ulogic_vector(31 downto 0);
@@ -173,10 +178,13 @@ end component;
     signal s_reg2toalu4             : std_ulogic_vector(31 downto 0);
     
     signal s_alutomem               : std_ulogic_vector(127 downto 0);
+    signal s_outreg2toMem           : std_ulogic_vector(127 downto 0);
     
     signal s_zero_alu2        : std_ulogic;
     signal s_zero_alu3        : std_ulogic;
     signal s_zero_alu4       : std_ulogic;
+    
+    
     
 begin
 
@@ -193,10 +201,16 @@ s_shamt         <= s_Instruction(10 downto  6);
 s_instr_funct   <= s_Instruction( 5 downto  0);
 s_imm16         <= s_Instruction(15 downto  0);
 s_jump_field	<= s_Instruction(25 downto  0);
-s_alutomem(127 downto 96) <= s_Aluresult;
-s_alutomem(95 downto 64) <= s_Alutoreg2;
-s_alutomem(63 downto 32) <= s_Alutoreg3;
-s_alutomem(31 downto 0) <= s_Alutoreg4;
+s_alutomem(127 downto 96) <= s_Data2Reg4_muxout;
+s_alutomem(95 downto 64) <= s_Data2Reg3_muxout;
+s_alutomem(63 downto 32) <= s_Data2Reg2_muxout;
+s_alutomem(31 downto 0) <= s_Data2Reg_muxout;
+
+s_outreg2toMem(127 downto 96) <= s_reg2toalu4; --Le output du registre defini dans rt va vers le write data de la memoire (pour sw)
+s_outreg2toMem(95 downto 64) <= s_reg2toalu3;
+s_outreg2toMem(63 downto 32) <= s_reg2toalu2;
+s_outreg2toMem(31 downto 0) <= s_reg_data2;
+
 ------------------------------------------------------------------------
 
 
@@ -256,9 +270,9 @@ port map (
 	i_SIMD_enable=> i_SIMDenable,
 	
 	i_Wr_DAT1    => s_Data2Reg_muxout,
-	i_Wr_DAT2    => s_alutoreg2,
-	i_Wr_DAT3    => s_alutoreg3,
-	i_Wr_DAT4    => s_alutoreg4,
+	i_Wr_DAT2    => s_Data2Reg2_muxout,
+	i_Wr_DAT3    => s_Data2Reg3_muxout,
+	i_Wr_DAT4    => s_Data2Reg4_muxout,
 	
 	i_WDest      => s_WriteRegDest_muxout,
 	i_WE         => i_RegWrite,
@@ -328,7 +342,7 @@ port map(
 -- MÃ©moire de donnÃ©es
 ------------------------------------------------------------------------
 -- signal pour combiner les sorties des alu
-
+ 
 inst_MemDonnees : MemDonneesWideDual
 Port map( 
 	clk 		=> clk,
@@ -336,13 +350,13 @@ Port map(
 	i_MemRead	=> i_MemRead,
 	i_MemWrite	=> i_MemWrite,
     i_Addresse	=> s_AluResult,
-	i_WriteData => s_AluResult,
+	i_WriteData => s_reg_data2,
     o_ReadData	=> s_MemoryReadData,
     
     -- ports pour accès à large bus, adresse partagée
     i_MemReadWide     => i_MemRead,  
-    i_MemWriteWide 	  => i_MemWrite,	
-    i_WriteDataWide   => s_alutomem,	
+    i_MemWriteWide 	  => i_MemWriteWide,	
+    i_WriteDataWide   => s_outreg2toMem,	
     o_ReadDataWide 	  => s_ReadDataVector	
     
     
@@ -353,8 +367,24 @@ Port map(
 -- Mux d'Ã©criture vers le banc de registres
 ------------------------------------------------------------------------
 
+--Alu 1 : 
 s_Data2Reg_muxout    <= s_adresse_PC_plus_4 when i_jump_link = '1' else
 					    s_AluResult         when i_MemtoReg = '0' else 
 						s_MemoryReadData;
+
+--Alu 2
+s_Data2Reg2_muxout    <= s_Alutoreg2  when i_MemtoReg = '0' else 
+                         s_ReadDataVector(63 downto 32);
+
+--Alu3
+s_Data2Reg3_muxout    <= s_Alutoreg3  when i_MemtoReg = '0' else 
+                         s_ReadDataVector(95 downto 64);
+
+--Alu4    
+s_Data2Reg4_muxout    <= s_Alutoreg4  when i_MemtoReg = '0' else 
+                         s_ReadDataVector(127 downto 96 );    
+ 
+ --Choix entre la sortie de la RAM ou de l'alu pour ecrire dans les registres dependant de MemtoReg
+ --MemtoReg =1  lorque  LW ou LWV
         
 end Behavioral;
