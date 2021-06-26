@@ -122,7 +122,7 @@ end component;
 	end component;
 
 	constant c_Registre31		 : std_ulogic_vector(4 downto 0) := "11111";
-	signal s_zero        : std_ulogic;
+	signal s_zero_alu1        : std_ulogic;
 	
     signal s_WriteRegDest_muxout: std_ulogic_vector(4 downto 0);
 	
@@ -174,6 +174,10 @@ end component;
     
     signal s_alutomem               : std_ulogic_vector(127 downto 0);
     
+    signal s_zero_alu2        : std_ulogic;
+    signal s_zero_alu3        : std_ulogic;
+    signal s_zero_alu4       : std_ulogic;
+    
 begin
 
 o_PC	<= r_PC; -- permet au synthÃ©tiseur de sortir de la logique. Sinon, il enlÃ¨ve tout...
@@ -218,7 +222,7 @@ s_adresse_branche				<= std_ulogic_vector(unsigned(s_imm_extended_shifted) + uns
 -- note, "i_jump_register" n'est pas dans les figures de COD5
 s_PC_Suivant		<= s_adresse_jump when i_jump = '1' else
                        s_reg_data1 when i_jump_register = '1' else
-					   s_adresse_branche when (i_branch = '1' and s_zero = '1') else
+					   s_adresse_branche when (i_branch = '1' and s_zero_alu1 = '1') else
 					   s_adresse_PC_plus_4;
 					   
 
@@ -248,17 +252,22 @@ port map (
 	reset        => reset,
 	i_RS1        => s_rs,
 	i_RS2        => s_rt,
+	
 	i_SIMD_enable=> i_SIMDenable,
+	
 	i_Wr_DAT1    => s_Data2Reg_muxout,
 	i_Wr_DAT2    => s_alutoreg2,
 	i_Wr_DAT3    => s_alutoreg3,
 	i_Wr_DAT4    => s_alutoreg4,
+	
 	i_WDest      => s_WriteRegDest_muxout,
 	i_WE         => i_RegWrite,
+	
 	o_RS1_DAT1   => s_reg_data1,
 	o_RS1_DAT2   => s_reg1toalu2,
 	o_RS1_DAT3   => s_reg1toalu3,
 	o_RS1_DAT4   => s_reg1toalu4,
+
 	o_RS2_DAT1   => s_reg_data2,
 	o_RS2_DAT2   => s_reg2toalu2,
 	o_RS2_DAT3   => s_reg2toalu3,
@@ -283,7 +292,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResult,
-	o_zero      => s_zero
+	o_zero      => s_zero_alu1
 	);
 
 inst_Alu2: alu 
@@ -293,7 +302,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg2,
-	o_zero      => s_zero
+	o_zero      => s_zero_alu2
 	);
 	
 inst_Alu3: alu 
@@ -303,7 +312,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg3,
-	o_zero      => s_zero
+	o_zero      => s_zero_alu3
 	);
 	
 inst_Alu4: alu 
@@ -313,7 +322,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg4,
-	o_zero      => s_zero
+	o_zero      => s_zero_alu4
 	);
 ------------------------------------------------------------------------
 -- MÃ©moire de donnÃ©es
@@ -327,7 +336,7 @@ Port map(
 	i_MemRead	=> i_MemRead,
 	i_MemWrite	=> i_MemWrite,
     i_Addresse	=> s_AluResult,
-	i_WriteData => s_reg_wide_1,
+	i_WriteData => s_AluResult,
     o_ReadData	=> s_MemoryReadData,
     
     -- ports pour accès à large bus, adresse partagée
