@@ -2,6 +2,6 @@
 *
 # Except for project and srcs themes:
 !*/mips32_unicycle_reference.srcs/*
-! mips32_unicycle_reference.xpr
-! GeneralConfig.wcfg
-! TestUnitaires.xlsx
+!mips32_unicycle_reference.xpr
+!GeneralConfig.wcfg
+!TestUnitaires.xlsx

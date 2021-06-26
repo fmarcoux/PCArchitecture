@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="mips_unicycle_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="mips32_package" />
+            <top_module name="mips_unicycle_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="256400fs"></ZoomStartTime>
+      <ZoomEndTime time="404801fs"></ZoomEndTime>
+      <Cursor1Time time="330000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="202"></NameColumnWidth>
+      <ValueColumnWidth column_width="108"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="3" />
+   <wvobject fp_name="group11" type="group">
+      <obj_property name="label">General</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/mips_unicycle_tb/reset" type="logic">
+         <obj_property name="ElementShortName">reset</obj_property>
+         <obj_property name="ObjectShortName">reset</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_unicycle_tb/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group4" type="group">
+      <obj_property name="label">Monitor</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/mips_unicycle_tb/inst_monitor/show_alu_action" type="other">
+         <obj_property name="ElementShortName">show_alu_action</obj_property>
+         <obj_property name="ObjectShortName">show_alu_action</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_unicycle_tb/inst_monitor/show_Instruction" type="other">
+         <obj_property name="ElementShortName">show_Instruction</obj_property>
+         <obj_property name="ObjectShortName">show_Instruction</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_unicycle_tb/inst_monitor/show_alu_unsupported" type="logic">
+         <obj_property name="ElementShortName">show_alu_unsupported</obj_property>
+         <obj_property name="ObjectShortName">show_alu_unsupported</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_unicycle_tb/inst_monitor/flag_syscall" type="logic">
+         <obj_property name="ElementShortName">flag_syscall</obj_property>
+         <obj_property name="ObjectShortName">flag_syscall</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_unicycle_tb/inst_monitor/end_program" type="logic">
+         <obj_property name="ElementShortName">end_program</obj_property>
+         <obj_property name="ObjectShortName">end_program</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group10" type="group">
+      <obj_property name="label">Modules</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group14" type="group">
+         <obj_property name="label">Controler</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/i_Op" type="array">
+            <obj_property name="ElementShortName">i_Op[5:0]</obj_property>
+            <obj_property name="ObjectShortName">i_Op[5:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/i_funct_field" type="array">
+            <obj_property name="ElementShortName">i_funct_field[5:0]</obj_property>
+            <obj_property name="ObjectShortName">i_funct_field[5:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="group17" type="group">
+            <obj_property name="label">out signals</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_RegDst" type="logic">
+               <obj_property name="ElementShortName">o_RegDst</obj_property>
+               <obj_property name="ObjectShortName">o_RegDst</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_Branch" type="logic">
+               <obj_property name="ElementShortName">o_Branch</obj_property>
+               <obj_property name="ObjectShortName">o_Branch</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_MemtoReg" type="logic">
+               <obj_property name="ElementShortName">o_MemtoReg</obj_property>
+               <obj_property name="ObjectShortName">o_MemtoReg</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_AluFunct" type="array">
+               <obj_property name="ElementShortName">o_AluFunct[3:0]</obj_property>
+               <obj_property name="ObjectShortName">o_AluFunct[3:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_MemRead" type="logic">
+               <obj_property name="ElementShortName">o_MemRead</obj_property>
+               <obj_property name="ObjectShortName">o_MemRead</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_MemWrite" type="logic">
+               <obj_property name="ElementShortName">o_MemWrite</obj_property>
+               <obj_property name="ObjectShortName">o_MemWrite</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_ALUSrc" type="logic">
+               <obj_property name="ElementShortName">o_ALUSrc</obj_property>
+               <obj_property name="ObjectShortName">o_ALUSrc</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_RegWrite" type="logic">
+               <obj_property name="ElementShortName">o_RegWrite</obj_property>
+               <obj_property name="ObjectShortName">o_RegWrite</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_Jump" type="logic">
+               <obj_property name="ElementShortName">o_Jump</obj_property>
+               <obj_property name="ObjectShortName">o_Jump</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_jump_register" type="logic">
+               <obj_property name="ElementShortName">o_jump_register</obj_property>
+               <obj_property name="ObjectShortName">o_jump_register</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_jump_link" type="logic">
+               <obj_property name="ElementShortName">o_jump_link</obj_property>
+               <obj_property name="ObjectShortName">o_jump_link</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_SignExtend" type="logic">
+               <obj_property name="ElementShortName">o_SignExtend</obj_property>
+               <obj_property name="ObjectShortName">o_SignExtend</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_SimdEnable" type="logic">
+               <obj_property name="ElementShortName">o_SimdEnable</obj_property>
+               <obj_property name="ObjectShortName">o_SimdEnable</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group31" type="group">
+         <obj_property name="label">Datapath</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="group32" type="group">
+            <obj_property name="label">Instruction</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/i_addresse" type="array">
+               <obj_property name="ElementShortName">i_addresse[31:0]</obj_property>
+               <obj_property name="ObjectShortName">i_addresse[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/o_instruction" type="array">
+               <obj_property name="ElementShortName">o_instruction[31:0]</obj_property>
+               <obj_property name="ObjectShortName">o_instruction[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/ram_Instructions" type="array">
+               <obj_property name="ElementShortName">ram_Instructions[0:255][31:0]</obj_property>
+               <obj_property name="ObjectShortName">ram_Instructions[0:255][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/s_MemoryIndex" type="other">
+               <obj_property name="ElementShortName">s_MemoryIndex</obj_property>
+               <obj_property name="ObjectShortName">s_MemoryIndex</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/regs" type="array">
+            <obj_property name="ElementShortName">regs[0:31][31:0]</obj_property>
+            <obj_property name="ObjectShortName">regs[0:31][31:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+         </wvobject>
+         <wvobject fp_name="group37" type="group">
+            <obj_property name="label">Reg</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_RS1" type="array">
+               <obj_property name="ElementShortName">i_RS1[4:0]</obj_property>
+               <obj_property name="ObjectShortName">i_RS1[4:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_RS2" type="array">
+               <obj_property name="ElementShortName">i_RS2[4:0]</obj_property>
+               <obj_property name="ObjectShortName">i_RS2[4:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_Wr_DAT1" type="array">
+               <obj_property name="ElementShortName">i_Wr_DAT1[31:0]</obj_property>
+               <obj_property name="ObjectShortName">i_Wr_DAT1[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_Wr_DAT2" type="array">
+               <obj_property name="ElementShortName">i_Wr_DAT2[31:0]</obj_property>
+               <obj_property name="ObjectShortName">i_Wr_DAT2[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_Wr_DAT3" type="array">
+               <obj_property name="ElementShortName">i_Wr_DAT3[31:0]</obj_property>
+               <obj_property name="ObjectShortName">i_Wr_DAT3[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_Wr_DAT4" type="array">
+               <obj_property name="ElementShortName">i_Wr_DAT4[31:0]</obj_property>
+               <obj_property name="ObjectShortName">i_Wr_DAT4[31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_WDest" type="array">
+               <obj_property name="ElementShortName">i_WDest[4:0]</obj_property>
+               <obj_property name="ObjectShortName">i_WDest[4:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_WE" type="logic">
+               <obj_property name="ElementShortName">i_WE</obj_property>
+               <obj_property name="ObjectShortName">i_WE</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_SIMD_enable" type="logic">
+               <obj_property name="ElementShortName">i_SIMD_enable</obj_property>
+               <obj_property name="ObjectShortName">i_SIMD_enable</obj_property>
+            </wvobject>
+            <wvobject fp_name="group47" type="group">
+               <obj_property name="label">Out signals</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS1_DAT1" type="array">
+                  <obj_property name="ElementShortName">o_RS1_DAT1[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS1_DAT1[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS1_DAT2" type="array">
+                  <obj_property name="ElementShortName">o_RS1_DAT2[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS1_DAT2[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS1_DAT3" type="array">
+                  <obj_property name="ElementShortName">o_RS1_DAT3[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS1_DAT3[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS1_DAT4" type="array">
+                  <obj_property name="ElementShortName">o_RS1_DAT4[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS1_DAT4[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS2_DAT1" type="array">
+                  <obj_property name="ElementShortName">o_RS2_DAT1[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS2_DAT1[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS2_DAT2" type="array">
+                  <obj_property name="ElementShortName">o_RS2_DAT2[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS2_DAT2[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS2_DAT3" type="array">
+                  <obj_property name="ElementShortName">o_RS2_DAT3[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS2_DAT3[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/o_RS2_DAT4" type="array">
+                  <obj_property name="ElementShortName">o_RS2_DAT4[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_RS2_DAT4[31:0]</obj_property>
+               </wvobject>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/s_reg_wide_1" type="array">
+               <obj_property name="ElementShortName">s_reg_wide_1[127:0]</obj_property>
+               <obj_property name="ObjectShortName">s_reg_wide_1[127:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/s_reg_wide_2" type="array">
+               <obj_property name="ElementShortName">s_reg_wide_2[127:0]</obj_property>
+               <obj_property name="ObjectShortName">s_reg_wide_2[127:0]</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject fp_name="group56" type="group">
+            <obj_property name="label">Alus</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu/i_alu_funct" type="array">
+               <obj_property name="ElementShortName">i_alu_funct[3:0]</obj_property>
+               <obj_property name="ObjectShortName">i_alu_funct[3:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu/i_shamt" type="array">
+               <obj_property name="ElementShortName">i_shamt[4:0]</obj_property>
+               <obj_property name="ObjectShortName">i_shamt[4:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="group57" type="group">
+               <obj_property name="label">Ins</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu/i_a" type="array">
+                  <obj_property name="ElementShortName">i_a[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_a[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu/i_b" type="array">
+                  <obj_property name="ElementShortName">i_b[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_b[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu2/i_a" type="array">
+                  <obj_property name="ElementShortName">i_a[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_a[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu2/i_b" type="array">
+                  <obj_property name="ElementShortName">i_b[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_b[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu3/i_a" type="array">
+                  <obj_property name="ElementShortName">i_a[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_a[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu3/i_b" type="array">
+                  <obj_property name="ElementShortName">i_b[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_b[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu4/i_a" type="array">
+                  <obj_property name="ElementShortName">i_a[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_a[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu4/i_b" type="array">
+                  <obj_property name="ElementShortName">i_b[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">i_b[31:0]</obj_property>
+               </wvobject>
+            </wvobject>
+            <wvobject fp_name="group68" type="group">
+               <obj_property name="label">out</obj_property>
+               <obj_property name="DisplayName">label</obj_property>
+               <obj_property name="isExpanded"></obj_property>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu/o_result" type="array">
+                  <obj_property name="ElementShortName">o_result[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_result[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu2/o_result" type="array">
+                  <obj_property name="ElementShortName">o_result[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_result[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu3/o_result" type="array">
+                  <obj_property name="ElementShortName">o_result[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_result[31:0]</obj_property>
+               </wvobject>
+               <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Alu4/o_result" type="array">
+                  <obj_property name="ElementShortName">o_result[31:0]</obj_property>
+                  <obj_property name="ObjectShortName">o_result[31:0]</obj_property>
+               </wvobject>
+            </wvobject>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/s_alutomem" type="array">
+            <obj_property name="ElementShortName">s_alutomem[127:0]</obj_property>
+            <obj_property name="ObjectShortName">s_alutomem[127:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group76" type="group">
+         <obj_property name="label">RamDonnees</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/i_WriteDataWide" type="array">
+            <obj_property name="ElementShortName">i_WriteDataWide[127:0]</obj_property>
+            <obj_property name="ObjectShortName">i_WriteDataWide[127:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/o_ReadDataWide" type="array">
+            <obj_property name="ElementShortName">o_ReadDataWide[127:0]</obj_property>
+            <obj_property name="ObjectShortName">o_ReadDataWide[127:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/i_MemWrite" type="logic">
+            <obj_property name="ElementShortName">i_MemWrite</obj_property>
+            <obj_property name="ObjectShortName">i_MemWrite</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/i_MemRead" type="logic">
+            <obj_property name="ElementShortName">i_MemRead</obj_property>
+            <obj_property name="ObjectShortName">i_MemRead</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/i_Addresse" type="array">
+            <obj_property name="ElementShortName">i_Addresse[31:0]</obj_property>
+            <obj_property name="ObjectShortName">i_Addresse[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/i_WriteData" type="array">
+            <obj_property name="ElementShortName">i_WriteData[31:0]</obj_property>
+            <obj_property name="ObjectShortName">i_WriteData[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/o_ReadData" type="array">
+            <obj_property name="ElementShortName">o_ReadData[31:0]</obj_property>
+            <obj_property name="ObjectShortName">o_ReadData[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/ram_DataMemory" type="array">
+            <obj_property name="ElementShortName">ram_DataMemory[0:255][31:0]</obj_property>
+            <obj_property name="ObjectShortName">ram_DataMemory[0:255][31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="group85" type="group">
+            <obj_property name="label">Debug</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/s_WideMemoryRangeValid" type="logic">
+               <obj_property name="ElementShortName">s_WideMemoryRangeValid</obj_property>
+               <obj_property name="ObjectShortName">s_WideMemoryRangeValid</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/s_MemoryRangeValid" type="logic">
+               <obj_property name="ElementShortName">s_MemoryRangeValid</obj_property>
+               <obj_property name="ObjectShortName">s_MemoryRangeValid</obj_property>
+            </wvobject>
+            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonnees/s_MemoryIndex" type="other">
+               <obj_property name="ElementShortName">s_MemoryIndex</obj_property>
+               <obj_property name="ObjectShortName">s_MemoryIndex</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+</wave_config>
