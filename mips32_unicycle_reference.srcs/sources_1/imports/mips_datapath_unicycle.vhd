@@ -162,17 +162,25 @@ end component;
     signal s_reg_wide_2            : std_ulogic_vector(127 downto 0);
     
     -- signaux SIMD
-    signal s_Data2Reg2_muxout       : std_ulogic_vector(31 downto 0); -- MUX pour write le res de l'alu ou la memoire dans les vect WR_DATA
+    signal s_Data2Reg2_muxout       : std_ulogic_vector(31 downto 0); -- MUX entre out du read de memoire, des alus et le write_dat de la memoire
     signal s_Data2Reg3_muxout       : std_ulogic_vector(31 downto 0);
     signal s_Data2Reg4_muxout       : std_ulogic_vector(31 downto 0);
     
-    signal s_alutoreg2             : std_ulogic_vector(31 downto 0);
+    
+    signal s_AluB_data2       : std_ulogic_vector(31 downto 0); -- MUX  immediate a linput de lalu 
+    signal s_AluB_data3       : std_ulogic_vector(31 downto 0);
+    signal s_AluB_data4       : std_ulogic_vector(31 downto 0);
+    
+    
+    
+    signal s_alutoreg2             : std_ulogic_vector(31 downto 0); --output des alu
     signal s_alutoreg3             : std_ulogic_vector(31 downto 0);
     signal s_alutoreg4             : std_ulogic_vector(31 downto 0);
     
-	signal s_reg1toalu2             : std_ulogic_vector(31 downto 0);
+	signal s_reg1toalu2             : std_ulogic_vector(31 downto 0);--entre banc registre et mux / alu
     signal s_reg1toalu3             : std_ulogic_vector(31 downto 0);
     signal s_reg1toalu4             : std_ulogic_vector(31 downto 0);
+    
     signal s_reg2toalu2             : std_ulogic_vector(31 downto 0);
     signal s_reg2toalu3             : std_ulogic_vector(31 downto 0);
     signal s_reg2toalu4             : std_ulogic_vector(31 downto 0);
@@ -201,12 +209,13 @@ s_shamt         <= s_Instruction(10 downto  6);
 s_instr_funct   <= s_Instruction( 5 downto  0);
 s_imm16         <= s_Instruction(15 downto  0);
 s_jump_field	<= s_Instruction(25 downto  0);
-s_alutomem(127 downto 96) <= s_Data2Reg4_muxout;
-s_alutomem(95 downto 64) <= s_Data2Reg3_muxout;
-s_alutomem(63 downto 32) <= s_Data2Reg2_muxout;
-s_alutomem(31 downto 0) <= s_Data2Reg_muxout;
 
-s_outreg2toMem(127 downto 96) <= s_reg2toalu4; --Le output du registre defini dans rt va vers le write data de la memoire (pour sw)
+s_alutomem(127 downto 96) <= s_Alutoreg4;
+s_alutomem(95 downto 64) <= s_Alutoreg3;
+s_alutomem(63 downto 32) <= s_Alutoreg2;
+s_alutomem(31 downto 0) <= s_AluResult;
+
+s_outreg2toMem(127 downto 96) <= s_reg2toalu4; --Le contenu du registre  a l'adresse rt(out banc de registre 2) va vers le write data de la memoire (pour sw)
 s_outreg2toMem(95 downto 64) <= s_reg2toalu3;
 s_outreg2toMem(63 downto 32) <= s_reg2toalu2;
 s_outreg2toMem(31 downto 0) <= s_reg_data2;
@@ -296,8 +305,11 @@ port map (
 s_imm_extended <= std_ulogic_vector(resize(  signed(s_imm16),32)) when i_SignExtend = '1' else -- extension de signe à 32 bits
 				  std_ulogic_vector(resize(unsigned(s_imm16),32)); 
 
--- Mux pour immédiats
+-- Mux pour immédiats 
 s_AluB_data <= s_reg_data2 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data2 <= s_reg2toalu2 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data3 <= s_reg2toalu3 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data4 <= s_reg2toalu4 when i_ALUSrc = '0' else s_imm_extended;
 
 inst_Alu: alu 
 port map( 
@@ -312,7 +324,7 @@ port map(
 inst_Alu2: alu 
 port map( 
 	i_a         => s_reg1toalu2,
-	i_b         => s_reg2toalu2,
+	i_b         => s_AluB_data2,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg2,
@@ -322,7 +334,7 @@ port map(
 inst_Alu3: alu 
 port map( 
 	i_a         => s_reg1toalu3,
-	i_b         => s_reg2toalu3,
+	i_b         => s_AluB_data3,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg3,
@@ -332,7 +344,7 @@ port map(
 inst_Alu4: alu 
 port map( 
 	i_a         => s_reg1toalu4,
-	i_b         => s_reg2toalu4,
+	i_b         => s_AluB_data4,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_Alutoreg4,
@@ -384,7 +396,7 @@ s_Data2Reg3_muxout    <= s_Alutoreg3  when i_MemtoReg = '0' else
 s_Data2Reg4_muxout    <= s_Alutoreg4  when i_MemtoReg = '0' else 
                          s_ReadDataVector(127 downto 96 );    
  
- --Choix entre la sortie de la RAM ou de l'alu pour ecrire dans les registres dependant de MemtoReg
+ --Choix entre la sortie de la RAM ou de l'alu pour ecrire dans les WR_write du registre dependant de MemtoReg
  --MemtoReg =1  lorque  LW ou LWV
         
 end Behavioral;

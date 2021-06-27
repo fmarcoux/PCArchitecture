@@ -142,7 +142,7 @@ begin
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or i_Op = OP_ADDV or i_Op = OP_SLTV else '0'; -- R type de SIMD sont ajoute ici
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
-								i_Op = OP_BEQ or i_Op = OP_ADDV or i_Op =OP_SLTV
+								i_Op = OP_BEQ or i_Op = OP_ADDV or i_Op =OP_SLTV -- select du mux entre read rt et immediate 
 						else '1';
 	o_Branch 		<= '1' when i_Op = OP_BEQ   else '0';
 	o_MemRead 		<= '1' when i_Op = OP_LW or i_Op = OP_LWV else '0'; 
