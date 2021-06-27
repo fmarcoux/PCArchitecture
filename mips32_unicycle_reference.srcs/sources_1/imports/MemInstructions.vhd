@@ -61,17 +61,17 @@ architecture Behavioral of MemInstructions is
 --X"0000000c",
 
 --test ADDV -- registre a regarder : 8 a 11 (0x1) et 11 a 15(0x1) (0x1 + 0x1 dans chaque reg) destination t0 = 8 a 11
---X"20080001",
---X"20090001",
---X"200a0001",
---X"200b0001",
---X"200c0001",
---X"200d0001",
---X"200e0001",
---X"200f0001",
---X"C9086000", -- addv t0 t0 t4
---X"2002000a",
---X"0000000c",
+X"20080001",
+X"20090001",
+X"200a0001",
+X"200b0001",
+X"200c0001",
+X"200d0001",
+X"200e0001",
+X"200f0001", 
+X"C9086020", -- addv t0 t0 t4
+X"2002000a",
+X"0000000c",
 
 
 -- test pour LWV  : va loader les valeur a ladresse de at (reg 1) dans $t0 - $t3 (reg 8 a 11)
@@ -93,9 +93,30 @@ architecture Behavioral of MemInstructions is
 --X"0000000c",
 
 --test pour ADDVS , ajoute 16 de %t0 a $t3
-X"D1080010",
-X"2002000a",
-X"0000000c",
+--X"D1080010",
+--X"2002000a",
+--X"0000000c",
+--test pour MOVNV , initie $t0 a $t3 avec 1,2,3,4 et move $t0 a $t4
+--X"20080001",
+--X"20090002",
+--X"200a0003",
+--X"200b0004",
+--X"CD0C0000", -- move $t0,$t4 -> ADDVS $t0 , $t4 , 0
+--X"3402000a",
+--X"0000000c",
+
+--test pour SLTV  initie $t0-$t3 a 1,2,3,4  $t4 - $t7  a 0,3,0,5 
+--X"20080001",
+--X"20090002",
+--X"200a0003",
+--X"200b0004",
+--X"00006020",
+--X"200d0003",
+--X"00007020",
+--X"200f0005",
+--X"D50C802A", -- SLTV $s0 , $t0 , $t4   met s0-$s3 a 1 si $t0 < $t4 ... 
+--X"3402000a",
+--X"0000000c",
 
 ------------------------
 -- Fin de votre code

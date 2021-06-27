@@ -84,8 +84,11 @@ begin
 			when OP_ADDVS =>
 			    o_AluFunct <= ALU_ADD; 
 			when OP_ADDV =>
-			    o_AluFunct <= ALU_ADD;
-			    
+			    o_AluFunct <= s_R_funct_decode;    --faut avoir 100000 dans la fnct avec OP_ADDV comme OPCode
+			when OP_SLTV =>
+			    o_AluFunct <= s_R_funct_decode;    --faut avoir 101010 dans la fnct avec OP_SLTV comme OPCode 
+			
+		
             -- when OP_??? =>   -- autres cas?
 			-- sinon
             when others =>
@@ -155,7 +158,7 @@ begin
 	
 	
 	o_SignExtend	<= '1' when i_OP = OP_ADDI or
-	                           i_OP = OP_BEQ or i_OP = OP_ADDVS
+	                           i_OP = OP_BEQ or i_OP = OP_ADDVS or I_OP = OP_MOVNV
 	                     else '0';
 	
 	

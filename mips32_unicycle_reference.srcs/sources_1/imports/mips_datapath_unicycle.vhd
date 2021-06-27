@@ -90,7 +90,7 @@ end component;
            reset            : in  std_ulogic;
            i_RS1            : in  std_ulogic_vector (4 downto 0);
            i_RS2            : in  std_ulogic_vector (4 downto 0);
-           
+            
            i_Wr_DAT1         : in  std_ulogic_vector (31 downto 0);
            i_Wr_DAT2         : in  std_ulogic_vector (31 downto 0);
            i_Wr_DAT3         : in  std_ulogic_vector (31 downto 0);
