@@ -23,16 +23,17 @@ entity BancRegistres is
            i_RS1            : in  std_ulogic_vector (4 downto 0);
            i_RS2            : in  std_ulogic_vector (4 downto 0);
            
-           i_Wr_DAT1         : in  std_ulogic_vector (31 downto 0);
-           i_Wr_DAT2         : in  std_ulogic_vector (31 downto 0);
-           i_Wr_DAT3         : in  std_ulogic_vector (31 downto 0);
-           i_Wr_DAT4         : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT1        : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT2        : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT3        : in  std_ulogic_vector (31 downto 0);
+           i_Wr_DAT4        : in  std_ulogic_vector (31 downto 0);
            
            i_WDest          : in  std_ulogic_vector (4 downto 0);
            i_WE 	        : in  std_ulogic;
-           
+           i_WE_Large       : in std_ulogic;
            i_SIMD_enable    : in std_ulogic;
-           
+           i_MOVEZERO       : in std_ulogic;   
+            
            o_RS1_DAT1        : out std_ulogic_vector (31 downto 0);
            o_RS1_DAT2        : out std_ulogic_vector (31 downto 0);
            o_RS1_DAT3        : out std_ulogic_vector (31 downto 0);
@@ -51,7 +52,7 @@ begin
     process( clk )
     begin
         if clk='1' and clk'event then
-            if i_WE = '1' and reset = '0' and i_WDest /= "00000" then
+            if i_WE = '1' and reset = '0' and i_WDest /= "00000" and i_WE_Large = '0' then
                 regs( to_integer( unsigned(i_WDest))) <= i_Wr_DAT1;
                 if i_SIMD_enable = '1' then
                     regs( to_integer( unsigned(i_WDest)+1)) <= i_Wr_DAT2;
@@ -59,6 +60,38 @@ begin
                     regs( to_integer( unsigned(i_WDest)+3)) <= i_Wr_DAT4;
                 end if;
             end if;
+            
+            if i_WE = '1' and reset = '0' and i_WDest /= "00000" and i_WE_Large = '1' then
+                    
+                  if i_MOVEZERO = '0' then
+                    if regs( to_integer( unsigned(i_RS2)))(0) /= '0'  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
+                        regs( to_integer( unsigned(i_WDest))) <= regs( to_integer( unsigned(i_RS1)));
+                    end if;
+                    if regs( to_integer( unsigned(i_RS2)+1))(0)/= '0' then    
+                        regs( to_integer( unsigned(i_WDest)+1)) <= regs( to_integer( unsigned(i_RS1)+1));
+                    end if;
+                    if regs( to_integer( unsigned(i_RS2)+2))(0) /= '0' then
+                        regs( to_integer( unsigned(i_WDest)+2)) <= regs( to_integer( unsigned(i_RS1)+2));
+                    end if;
+                   if regs( to_integer( unsigned(i_RS2)+3))(0) /= '0' then
+                        regs( to_integer( unsigned(i_WDest)+3)) <= regs( to_integer( unsigned(i_RS1)+3));
+                    end if;
+                    
+                  elsif i_MOVEZERO = '1' then
+                    if regs( to_integer( unsigned(i_RS2)))(0) = '0'  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
+                        regs( to_integer( unsigned(i_WDest))) <= regs( to_integer( unsigned(i_RS1)));
+                    end if;
+                    if regs( to_integer( unsigned(i_RS2)+1))(0)= '0' then    
+                        regs( to_integer( unsigned(i_WDest)+1)) <= regs( to_integer( unsigned(i_RS1)+1));
+                    end if;
+                    if regs( to_integer( unsigned(i_RS2)+2))(0) = '0' then
+                        regs( to_integer( unsigned(i_WDest)+2)) <= regs( to_integer( unsigned(i_RS1)+2));
+                    end if;
+                   if regs( to_integer( unsigned(i_RS2)+3))(0) = '0' then
+                        regs( to_integer( unsigned(i_WDest)+3)) <= regs( to_integer( unsigned(i_RS1)+3));
+                    end if;
+                end if;
+              end if;
         end if;
     end process;
     

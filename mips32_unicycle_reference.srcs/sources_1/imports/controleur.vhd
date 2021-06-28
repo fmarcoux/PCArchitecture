@@ -38,7 +38,9 @@ Port (
 	o_SignExtend 	: out std_ulogic;
 	--ADD for SIMD instruction
 	o_SimdEnable : out std_ulogic;
-	o_MemWriteWide : out std_ulogic
+	o_MemWriteWide : out std_ulogic;
+	o_WE_Large      : out std_ulogic;
+	o_MOVEZERO      : out std_ulogic 
 	
     );
 end controleur;
@@ -142,7 +144,7 @@ begin
 						else '0';
 	
 	
-	o_RegDst 		<= '1' when i_Op = OP_Rtype or i_Op = OP_ADDV or i_Op = OP_SLTV else '0'; -- R type de SIMD sont ajoute ici
+	o_RegDst 		<= '1' when i_Op = OP_Rtype or i_Op = OP_ADDV or i_Op = OP_SLTV or i_OP = OP_MOVNV or i_OP = OP_MOVZV else '0'; -- R type de SIMD sont ajoute ici
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
 								i_Op = OP_BEQ or i_Op = OP_ADDV or i_Op =OP_SLTV -- select du mux entre read rt et immediate 
@@ -182,5 +184,11 @@ begin
                              i_OP = OP_SLTV
                              else '0';
      
+     o_WE_Large <='1' when i_OP = OP_MOVNV or 
+                           i_Op = OP_MOVZV
+                           else '0';
+                           
+     o_MOVEZERO <= '1' when i_OP= OP_MOVZV 
+                            else '0';
 
 end Behavioral;

@@ -41,7 +41,8 @@ Port (
 	i_SignExtend 	: in std_ulogic;
 	
 	i_simdEnable    : in std_ulogic;
-
+	i_WE_large      : in std_ulogic;
+    i_MOVEZERO      : in std_ulogic;
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 );
@@ -98,9 +99,9 @@ end component;
            
            i_WDest          : in  std_ulogic_vector (4 downto 0);
            i_WE 	        : in  std_ulogic;           
-           
+           i_MOVEZERO       : in std_ulogic;
            i_SIMD_enable    : in std_ulogic;
-           
+           i_WE_Large       : in std_ulogic;
            o_RS1_DAT1        : out std_ulogic_vector (31 downto 0);
            o_RS1_DAT2        : out std_ulogic_vector (31 downto 0);
            o_RS1_DAT3        : out std_ulogic_vector (31 downto 0);
@@ -122,7 +123,7 @@ end component;
 		o_zero		: out std_ulogic
 		);
 	end component;
-
+   
 	constant c_Registre31		 : std_ulogic_vector(4 downto 0) := "11111";
 	signal s_zero_alu1        : std_ulogic;
 	
@@ -277,6 +278,7 @@ port map (
 	i_RS2        => s_rt,
 	
 	i_SIMD_enable=> i_SIMDenable,
+	i_WE_Large   => i_WE_Large,
 	
 	i_Wr_DAT1    => s_Data2Reg_muxout,
 	i_Wr_DAT2    => s_Data2Reg2_muxout,
@@ -285,7 +287,7 @@ port map (
 	
 	i_WDest      => s_WriteRegDest_muxout,
 	i_WE         => i_RegWrite,
-	
+	i_MOVEZERO   => i_MOVEZERO,
 	o_RS1_DAT1   => s_reg_data1,
 	o_RS1_DAT2   => s_reg1toalu2,
 	o_RS1_DAT3   => s_reg1toalu3,

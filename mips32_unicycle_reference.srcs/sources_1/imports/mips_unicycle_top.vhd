@@ -11,7 +11,7 @@
 --					Sébastien Roy
 --  
 ---------------------------------------------------------------------------------------------
- 
+  
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -52,7 +52,9 @@ Port (
 	
 	--Added for SIMD
 	o_SimdEnable   : out std_ulogic;
-	o_MemWriteWide : out std_ulogic
+	o_MemWriteWide : out std_ulogic;
+	o_WE_Large     : out std_ulogic;
+	o_MOVEZERO     : out std_ulogic
 	
     );
 end component;
@@ -77,7 +79,8 @@ Port (
 	i_SignExtend 	: in std_ulogic;
 	
 	i_SimdEnable    : in std_ulogic;
-	
+	i_WE_Large      : in std_ulogic;
+	i_MOVEZERO      : in std_ulogic;
 	i_MemWriteWide  : in std_ulogic;
 	
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
@@ -97,7 +100,8 @@ end component;
 	signal s_jump_link      : std_ulogic;
     signal s_jump           : std_ulogic;
 	signal s_SignExtend     : std_ulogic;
-
+	signal s_WE_large       : std_ulogic;
+    signal s_MOVEZERO       : std_ulogic;      
     signal s_MemWriteWide   : std_ulogic;
 
     signal s_Instruction    : std_ulogic_vector(31 downto 0);
@@ -132,7 +136,9 @@ Port map(
 	o_SignExtend 	=> s_SignExtend,
 	
 	o_SimdEnable    => s_simdEnable, --Enable la fonction vectorielle des operations
-	o_MemWriteWide  => s_MemWriteWide  -- Enable du write dans les reg ou dans la memoire seulement lors des operation SIMD
+	o_MemWriteWide  => s_MemWriteWide,  -- Enable du write dans les reg ou dans la memoire seulement lors des operation SIMD
+	o_WE_Large      => s_WE_large,
+	o_MOVEZERO      => s_MOVEZERO
     );
 	
 	
@@ -156,9 +162,9 @@ Port map(
 	i_SignExtend 	=> s_SignExtend,
 	
 	i_SimdEnable    => s_SimdEnable, --Enable la fonction vectorielle des operations
-	
+	i_WE_Large      => s_WE_Large,
 	i_MemWriteWide  => s_MemWriteWide,
-		
+	i_MOVEZERO      => s_MOVEZERO,	
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC
 );	
