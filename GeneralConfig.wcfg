@@ -11,19 +11,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="63333fs"></ZoomStartTime>
-      <ZoomEndTime time="443334fs"></ZoomEndTime>
-      <Cursor1Time time="330000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="870001fs"></ZoomEndTime>
+      <Cursor1Time time="149000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="255"></NameColumnWidth>
-      <ValueColumnWidth column_width="108"></ValueColumnWidth>
+      <NameColumnWidth column_width="200"></NameColumnWidth>
+      <ValueColumnWidth column_width="104"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="3" />
    <wvobject fp_name="group11" type="group">
       <obj_property name="label">General</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/mips_unicycle_tb/reset" type="logic">
          <obj_property name="ElementShortName">reset</obj_property>
          <obj_property name="ObjectShortName">reset</obj_property>
@@ -36,7 +35,6 @@
    <wvobject fp_name="group4" type="group">
       <obj_property name="label">Monitor</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/mips_unicycle_tb/inst_monitor/show_alu_action" type="other">
          <obj_property name="ElementShortName">show_alu_action</obj_property>
          <obj_property name="ObjectShortName">show_alu_action</obj_property>
@@ -65,6 +63,7 @@
       <wvobject fp_name="group14" type="group">
          <obj_property name="label">Controler</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/i_Op" type="array">
             <obj_property name="ElementShortName">i_Op[5:0]</obj_property>
             <obj_property name="ObjectShortName">i_Op[5:0]</obj_property>
@@ -73,10 +72,13 @@
             <obj_property name="ElementShortName">i_funct_field[5:0]</obj_property>
             <obj_property name="ObjectShortName">i_funct_field[5:0]</obj_property>
          </wvobject>
+         <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_SimdEnable" type="logic">
+            <obj_property name="ElementShortName">o_SimdEnable</obj_property>
+            <obj_property name="ObjectShortName">o_SimdEnable</obj_property>
+         </wvobject>
          <wvobject fp_name="group17" type="group">
             <obj_property name="label">out signals</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_RegDst" type="logic">
                <obj_property name="ElementShortName">o_RegDst</obj_property>
                <obj_property name="ObjectShortName">o_RegDst</obj_property>
@@ -129,10 +131,6 @@
                <obj_property name="ElementShortName">o_SignExtend</obj_property>
                <obj_property name="ObjectShortName">o_SignExtend</obj_property>
             </wvobject>
-            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/o_SimdEnable" type="logic">
-               <obj_property name="ElementShortName">o_SimdEnable</obj_property>
-               <obj_property name="ObjectShortName">o_SimdEnable</obj_property>
-            </wvobject>
          </wvobject>
       </wvobject>
       <wvobject fp_name="group31" type="group">
@@ -142,7 +140,6 @@
          <wvobject fp_name="group32" type="group">
             <obj_property name="label">Instruction</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/i_addresse" type="array">
                <obj_property name="ElementShortName">i_addresse[31:0]</obj_property>
                <obj_property name="ObjectShortName">i_addresse[31:0]</obj_property>
@@ -150,10 +147,6 @@
             <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/o_instruction" type="array">
                <obj_property name="ElementShortName">o_instruction[31:0]</obj_property>
                <obj_property name="ObjectShortName">o_instruction[31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/ram_Instructions" type="array">
-               <obj_property name="ElementShortName">ram_Instructions[0:255][31:0]</obj_property>
-               <obj_property name="ObjectShortName">ram_Instructions[0:255][31:0]</obj_property>
             </wvobject>
             <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/s_MemoryIndex" type="other">
                <obj_property name="ElementShortName">s_MemoryIndex</obj_property>
@@ -167,7 +160,6 @@
          <wvobject fp_name="group37" type="group">
             <obj_property name="label">Reg</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_Registres/i_RS1" type="array">
                <obj_property name="ElementShortName">i_RS1[4:0]</obj_property>
                <obj_property name="ObjectShortName">i_RS1[4:0]</obj_property>
