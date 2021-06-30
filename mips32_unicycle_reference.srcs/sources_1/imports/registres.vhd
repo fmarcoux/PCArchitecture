@@ -64,30 +64,30 @@ begin
             if i_WE = '1' and reset = '0' and i_WDest /= "00000" and i_WE_Large = '1' then
                     
                   if i_MOVEZERO = '0' then
-                    if regs( to_integer( unsigned(i_RS2)))(0) /= '0'  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
+                    if regs( to_integer( unsigned(i_RS2))) /= x"00000000"  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
                         regs( to_integer( unsigned(i_WDest))) <= regs( to_integer( unsigned(i_RS1)));
                     end if;
-                    if regs( to_integer( unsigned(i_RS2)+1))(0)/= '0' then    
+                    if regs( to_integer( unsigned(i_RS2)+1))/= x"00000000" then    
                         regs( to_integer( unsigned(i_WDest)+1)) <= regs( to_integer( unsigned(i_RS1)+1));
                     end if;
-                    if regs( to_integer( unsigned(i_RS2)+2))(0) /= '0' then
+                    if regs( to_integer( unsigned(i_RS2)+2)) /= x"00000000" then
                         regs( to_integer( unsigned(i_WDest)+2)) <= regs( to_integer( unsigned(i_RS1)+2));
                     end if;
-                   if regs( to_integer( unsigned(i_RS2)+3))(0) /= '0' then
+                   if regs( to_integer( unsigned(i_RS2)+3)) /= x"00000000" then
                         regs( to_integer( unsigned(i_WDest)+3)) <= regs( to_integer( unsigned(i_RS1)+3));
                     end if;
                     
                   elsif i_MOVEZERO = '1' then
-                    if regs( to_integer( unsigned(i_RS2)))(0) = '0'  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
+                    if regs( to_integer( unsigned(i_RS2))) = x"00000000"  then -- le vecteur de 1 et 0 va etre dans i_rs2 lors du movnv, ce quon a besoin de move est dans i_rs1
                         regs( to_integer( unsigned(i_WDest))) <= regs( to_integer( unsigned(i_RS1)));
                     end if;
-                    if regs( to_integer( unsigned(i_RS2)+1))(0)= '0' then    
+                    if regs( to_integer( unsigned(i_RS2)+1))= x"00000000" then    
                         regs( to_integer( unsigned(i_WDest)+1)) <= regs( to_integer( unsigned(i_RS1)+1));
                     end if;
-                    if regs( to_integer( unsigned(i_RS2)+2))(0) = '0' then
+                    if regs( to_integer( unsigned(i_RS2)+2)) = x"00000000" then
                         regs( to_integer( unsigned(i_WDest)+2)) <= regs( to_integer( unsigned(i_RS1)+2));
                     end if;
-                   if regs( to_integer( unsigned(i_RS2)+3))(0) = '0' then
+                   if regs( to_integer( unsigned(i_RS2)+3)) = x"00000000" then
                         regs( to_integer( unsigned(i_WDest)+3)) <= regs( to_integer( unsigned(i_RS1)+3));
                     end if;
                 end if;
